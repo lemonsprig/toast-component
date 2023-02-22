@@ -2,6 +2,7 @@ import React from "react";
 
 import Button from "../Button";
 import Toast from "../Toast";
+import ToastShelf from "../ToastShelf";
 
 import styles from "./ToastPlayground.module.css";
 
@@ -11,6 +12,14 @@ function ToastPlayground() {
   const [isShown, setIsShown] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
+  const [toasts, setToasts] = React.useState([
+    { id: crypto.randomUUID(), message: "You are a cat!", variant: "success" },
+    {
+      id: crypto.randomUUID(),
+      message: "It looks like rain",
+      variant: "warning",
+    },
+  ]);
 
   function handleDismiss() {
     setIsShown(false);
@@ -23,11 +32,7 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {isShown && (
-        <Toast variant={variant} handleDismiss={handleDismiss}>
-          {message}
-        </Toast>
-      )}
+      {isShown && <ToastShelf toasts={toasts}></ToastShelf>}
 
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
