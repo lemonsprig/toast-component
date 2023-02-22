@@ -1,12 +1,14 @@
 import React from "react";
 
 import Button from "../Button";
+import Toast from "../Toast";
 
 import styles from "./ToastPlayground.module.css";
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
+  const [isShown, setIsShown] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
 
@@ -16,6 +18,8 @@ function ToastPlayground() {
         <img alt="Cute toast mascot" src="/toast.png" />
         <h1>Toast Playground</h1>
       </header>
+
+      {isShown && <Toast variant={variant}>{message}</Toast>}
 
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
@@ -43,20 +47,25 @@ function ToastPlayground() {
               const id = `variant-${option}`;
               return (
                 <label key={id} htmlFor={id}>
-                  <input id={id} type="radio" name="variant" value={option} />
+                  <input
+                    id={id}
+                    type="radio"
+                    name="variant"
+                    value={option}
+                    checked={option === variant}
+                    onChange={(event) => setVariant(event.target.value)}
+                  />
                   {option}
                 </label>
               );
             })}
-
-            {/* TODO Other Variant radio buttons here */}
           </div>
         </div>
 
         <div className={styles.row}>
           <div className={styles.label} />
           <div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
-            <Button>Pop Toast!</Button>
+            <Button onClick={() => setIsShown(true)}>Pop Toast!</Button>
           </div>
         </div>
       </div>
