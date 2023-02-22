@@ -12,6 +12,10 @@ function ToastPlayground() {
   const [message, setMessage] = React.useState("");
   const [variant, setVariant] = React.useState(VARIANT_OPTIONS[0]);
 
+  function handleDismiss() {
+    setIsShown(false);
+  }
+
   return (
     <div className={styles.wrapper}>
       <header>
@@ -19,7 +23,11 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {isShown && <Toast variant={variant}>{message}</Toast>}
+      {isShown && (
+        <Toast variant={variant} handleDismiss={handleDismiss}>
+          {message}
+        </Toast>
+      )}
 
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
